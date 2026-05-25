@@ -9,6 +9,9 @@ public class ContextoMermaid
 
     public String getNextID()
     {
-        return "nodo" + (contador++);
+        return "nodo" + incContador();
+    }
+    public int incContador() {
+        return contador++;
     }
 }

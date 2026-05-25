@@ -48,9 +48,84 @@ public class CParser {
             return Asignacion();
         } else if (currentToken(TipoToken.IF)) {
             return SentenciaIf();
-        } else {
+        } else if (currentToken(TipoToken.WHILE)) { 
+            return SentenciaWhile();
+        } else if (currentToken(TipoToken.FOR)) { 
+            return SentenciaFor();
+        }else {
             throw new Exception("Error Sintáctico: Instrucción no reconocida en '" + tokens.get(indiceToken).getNombre() + "'");
         }
+    }
+
+    // <SentenciaFor> ::= "for" "(" <AsignacionSencilla> ";" <Condicion> ";" <ActualizacionSencilla> ")" <Bloque>
+    private NodoFor SentenciaFor() throws Exception {
+        match(TipoToken.FOR);
+        match(TipoToken.PARENTESIS_IZQ);
+
+        // 1. Parsear la inicialización (ej: i = 0)
+        String varInit = tokens.get(indiceToken).getNombre();
+        match(TipoToken.IDENTIFICADOR);
+        match(TipoToken.IGUAL);
+        String valInit = tokens.get(indiceToken).getNombre();
+        match(TipoToken.NUMERO);
+        match(TipoToken.PUNTO_Y_COMA);
+        String inicializacion = varInit + " = " + valInit;
+
+        // 2. Parsear la condición (ej: i < 10)
+        String opIzq = tokens.get(indiceToken).getNombre();
+        match(TipoToken.IDENTIFICADOR);
+        String operador = tokens.get(indiceToken).getNombre();
+        if (currentToken(TipoToken.MAYOR_QUE)) match(TipoToken.MAYOR_QUE);
+        else match(TipoToken.MENOR_QUE);
+        String opDer = tokens.get(indiceToken).getNombre();
+        match(TipoToken.NUMERO);
+        match(TipoToken.PUNTO_Y_COMA);
+        String condicion = opIzq + " " + operador + " " + opDer;
+
+        // 3. Parsear la actualización (ej: i = i + 1 o simplificado)
+        // Nota: para mantener el avance simple, asumiremos un formato de asignación corta o id
+        String varStep = tokens.get(indiceToken).getNombre();
+        match(TipoToken.IDENTIFICADOR);
+        // Consumimos lo que quede de la expresión de incremento hasta el paréntesis de cierre
+        while(!currentToken(TipoToken.PARENTESIS_DER)) {
+            indiceToken++;
+        }
+        String actualizacion = varStep + "++"; 
+
+        match(TipoToken.PARENTESIS_DER);
+
+        // 4. Parsear el cuerpo interno
+        NodoBloque bloque = Bloque();
+
+        return new NodoFor(inicializacion, condicion, actualizacion, bloque);
+    }
+
+    // <SentenciaWhile> ::= "while" "(" <Condicion> ")" <Bloque>
+    private NodoWhile SentenciaWhile() throws Exception {
+        match(TipoToken.WHILE);
+        match(TipoToken.PARENTESIS_IZQ);
+        
+        // Usamos el mismo parseo simplificado de condición que usaste en el IF
+        String opIzq = tokens.get(indiceToken).getNombre();
+        match(TipoToken.IDENTIFICADOR); 
+        
+        String operador = tokens.get(indiceToken).getNombre();
+        if (currentToken(TipoToken.MAYOR_QUE)) match(TipoToken.MAYOR_QUE);
+        else if (currentToken(TipoToken.MENOR_QUE)) match(TipoToken.MENOR_QUE);
+        else match(TipoToken.IGUAL_IGUAL);
+        
+        String opDer = tokens.get(indiceToken).getNombre();
+        if (currentToken(TipoToken.NUMERO)) match(TipoToken.NUMERO);
+        else match(TipoToken.IDENTIFICADOR);
+        
+        match(TipoToken.PARENTESIS_DER);
+        
+        String condicion = opIzq + " " + operador + " " + opDer;
+
+        // Extraemos todo el contenido del bucle
+        NodoBloque bloque = Bloque();
+
+        return new NodoWhile(condicion, bloque);
     }
 
     // <Declaracion> ::= "int" <Identificador> ";"
@@ -63,20 +138,41 @@ public class CParser {
         return new NodoDeclaracion("int", nombreVariable);
     }
 
-    // <Asignacion> ::= <Identificador> "=" <Valor> ";"
+    // <Asignacion> ::= <Identificador> "=" <Valor> [ <OperadorAritmetico> <Valor> ] ";"
     private NodoAsignacion Asignacion() throws Exception {
         String nombreVariable = tokens.get(indiceToken).getNombre();
         match(TipoToken.IDENTIFICADOR);
         match(TipoToken.IGUAL);
         
-        // Simplificaremos la expresión por ahora para el avance (solo toma el número o variable)
-        String valor = tokens.get(indiceToken).getNombre();
+        StringBuilder expresion = new StringBuilder();
+        
+        // 1. Leemos el primer valor (ej. la 'x' en x = x * 2)
+        expresion.append(tokens.get(indiceToken).getNombre());
         if (currentToken(TipoToken.NUMERO)) match(TipoToken.NUMERO);
         else match(TipoToken.IDENTIFICADOR);
         
+        // 2. ¿Hay una operación aritmética después? (+, -, *, /)
+        if (currentToken(TipoToken.SUMA) || currentToken(TipoToken.RESTA) || 
+            currentToken(TipoToken.MULTIPLICACION) || currentToken(TipoToken.DIVISION)) {
+            
+            // Extraemos y guardamos el signo
+            expresion.append(" ").append(tokens.get(indiceToken).getNombre()).append(" ");
+            
+            // Consumimos el token correcto
+            if (currentToken(TipoToken.SUMA)) match(TipoToken.SUMA);
+            else if (currentToken(TipoToken.RESTA)) match(TipoToken.RESTA);
+            else if (currentToken(TipoToken.MULTIPLICACION)) match(TipoToken.MULTIPLICACION);
+            else match(TipoToken.DIVISION);
+            
+            // Leemos el segundo valor (ej. el '2' en x = x * 2)
+            expresion.append(tokens.get(indiceToken).getNombre());
+            if (currentToken(TipoToken.NUMERO)) match(TipoToken.NUMERO);
+            else match(TipoToken.IDENTIFICADOR);
+        }
+        
         match(TipoToken.PUNTO_Y_COMA);
         
-        return new NodoAsignacion(nombreVariable, valor);
+        return new NodoAsignacion(nombreVariable, expresion.toString());
     }
 
     // <SentenciaIf> ::= "if" "(" <Condicion> ")" <Bloque> [ "else" <Bloque> ]

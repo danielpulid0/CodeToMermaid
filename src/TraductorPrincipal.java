@@ -5,11 +5,13 @@ public class TraductorPrincipal {
         String codigoC = 
             "int main() {\n" +
             "    int x;\n" +
-            "    x = 15;\n" +
-            "    if (x > 10) {\n" +
-            "        x = 1;\n" +
-            "    } else {\n" +
-            "        x = 0;\n" +
+            "    x = 0;\n" +
+            "    while (x < 5) {\n" +
+            "        x = x + 1;\n" +
+            "    }\n" +
+            "    int i;\n" +
+            "    for (i = 0 ; i < 10; i = i + 1) {\n" +
+            "        x=i;\n" +
             "    }\n" +
             "}";
 

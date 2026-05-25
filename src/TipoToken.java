@@ -4,12 +4,20 @@ public enum TipoToken {
     IF("if"), 
     ELSE("else"), 
     MAIN("main"),
+    WHILE("while"),
+    FOR("for"),
     
     // Símbolos y operadores (Ojo: IGUAL_IGUAL debe ir antes que IGUAL)
     IGUAL_IGUAL("=="),
     IGUAL("="), 
     MAYOR_QUE(">"), 
     MENOR_QUE("<"), 
+
+    // Operadores aritméticos
+    SUMA("\\+"),             // Escapado para Regex
+    RESTA("-"),
+    MULTIPLICACION("\\*"),   // Escapado para Regex
+    DIVISION("/"),
     
     // Delimitadores
     PUNTO_Y_COMA(";"), 
