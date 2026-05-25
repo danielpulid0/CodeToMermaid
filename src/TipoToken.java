@@ -1,16 +1,33 @@
-/*
-*   ToDo: PALABRAS RESERVADAS QUE SE UTILIZARAN
-*/
 public enum TipoToken {
     // Palabras reservadas
-    INT, IF, ELSE, MAIN,
-    // Símbolos y operadores
-    IGUAL, MAYOR_QUE, MENOR_QUE, IGUAL_IGUAL,
-    PUNTO_Y_COMA, COMA,
-    PARENTESIS_IZQ, PARENTESIS_DER,
-    LLAVE_IZQ, LLAVE_DER,
+    INT("int"), 
+    IF("if"), 
+    ELSE("else"), 
+    MAIN("main"),
+    
+    // Símbolos y operadores (Ojo: IGUAL_IGUAL debe ir antes que IGUAL)
+    IGUAL_IGUAL("=="),
+    IGUAL("="), 
+    MAYOR_QUE(">"), 
+    MENOR_QUE("<"), 
+    
+    // Delimitadores
+    PUNTO_Y_COMA(";"), 
+    COMA(","),
+    PARENTESIS_IZQ("\\("), 
+    PARENTESIS_DER("\\)"),
+    LLAVE_IZQ("\\{"), 
+    LLAVE_DER("\\}"),
+    
     // Valores y variables
-    IDENTIFICADOR, // ej: x, numero
-    NUMERO,        // ej: 15, 0, 1
-    EOF            // Fin de archivo
+    NUMERO("\\d+"),
+    IDENTIFICADOR("[a-zA-Z_][a-zA-Z0-9_]*"), 
+    
+    EOF(""); // Fin de archivo
+
+    public final String patron;
+    
+    TipoToken(String patron) {
+        this.patron = patron;
+    }
 }
