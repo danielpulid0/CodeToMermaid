@@ -1,5 +1,6 @@
 import java.util.List;
 
+@Deprecated
 public class PruebaLexer {
     public static void main(String[] args) {
         String codigoC = 
