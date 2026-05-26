@@ -2,19 +2,21 @@ import java.util.List;
 
 @Deprecated
 public class PruebaLexer {
-    public static void main(String[] args) {
-        String codigoC = 
-            "// Este es nuestro primer test\n" +
-            "int main() {\n" +
-            "    int x;\n" +
-            "    x = 15; /* Comentario\n" +
-            "               multilinea */\n" +
-            "    if (x == 10) {\n" +
-            "        x = 1;\n" +
-            "    } else {\n" +
-            "        x = 0;\n" +
-            "    }\n" +
-            "}";
+	public static void main(String[] args) {
+		String codigoC =
+				"""
+				// Este es nuestro primer test
+				int main() {
+					int x;
+					x = 15; /* Comentario
+							multilinea */
+					if (x == 10) {
+						x = 1;
+					} else {
+						x = 0;
+					}
+				}
+				""";
 
         try {
             CLexer lexer = new CLexer(codigoC);
