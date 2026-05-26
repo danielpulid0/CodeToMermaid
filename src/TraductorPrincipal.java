@@ -1,6 +1,9 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.awt.Desktop;
+import java.net.URI;
+import java.util.Base64;
 
 public class TraductorPrincipal {
     public static void main(String[] args) {
@@ -11,23 +14,6 @@ public class TraductorPrincipal {
             System.out.println("Error. No se ingresó ninguna entrada.");
             return;
         }
-
-        System.out.println(entrada);
-
-
-        String codigoC = 
-            "int main() {\n" +
-            "    int x;\n" +
-            "    scanf(\"%d\", &x);\n" +
-            "    x = x + 1;\n" +
-            "    while (x < 5) {\n" +
-            "        x = x + 1;\n" +
-            "    }\n" +
-            "    int i;\n" +
-            "    for (i = 0 ; i < 10; i = i + 1) {\n" +
-            "        x=i;\n" +
-            "    }\n" +
-            "}";
 
         try {
             // 1. Análisis Léxico
@@ -42,8 +28,9 @@ public class TraductorPrincipal {
             ContextoMermaid contexto = new ContextoMermaid();
             ast.generarMermaid(contexto);
             
-            System.out.println("--- CÓDIGO MERMAID GENERADO ---");
+            System.out.println("--- CÓDIGO MERMAID ---");
             System.out.println(contexto.codigo.toString());
+            abrirEnNavegador(contexto.codigo.toString());
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -62,6 +49,28 @@ public class TraductorPrincipal {
         } catch (IOException e) {
             System.out.println("Error al leer el archivo: " + e.getMessage());
             return "";
+        }
+    }
+
+    public static void abrirEnNavegador(String codigo) {
+        try {
+            // Escapar caracteres especiales para JSON válido
+            String codigoEscapado = codigo
+                .replace("\\", "\\\\")
+                .replace("\"", "\\\"")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t");
+
+            // Mermaid Live espera un JSON con esta estructura exacta
+            String json = "{\"code\":\"" + codigoEscapado + "\",\"mermaid\":{\"theme\":\"default\"}}";
+
+            String base64 = Base64.getUrlEncoder().encodeToString(json.getBytes("UTF-8"));
+            String url = "https://mermaid.live/edit#base64:" + base64;
+
+            Desktop.getDesktop().browse(new URI(url));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

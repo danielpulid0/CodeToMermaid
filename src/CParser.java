@@ -55,9 +55,32 @@ public class CParser {
             return SentenciaFor();
         }else if (currentToken(TipoToken.SCANF)) {
             return SentenciaScanf();
+        }else if (currentToken(TipoToken.RETURN)) {
+            return SentenciaReturn();
         }else {
             throw new Exception("Error Sintáctico: Instrucción no reconocida en '" + tokens.get(indiceToken).getNombre() + "'");
         }
+    }
+
+    // <SentenciaReturn> ::= "return" <Valor> ";"
+    private NodoReturn SentenciaReturn() throws Exception {
+        match(TipoToken.RETURN);
+        
+        String valor = "";
+        
+        if (currentToken(TipoToken.NUMERO) || currentToken(TipoToken.IDENTIFICADOR)) {
+            valor = tokens.get(indiceToken).getNombre();
+            
+            if (currentToken(TipoToken.NUMERO)) {
+                match(TipoToken.NUMERO);
+            } else {
+                match(TipoToken.IDENTIFICADOR);
+            }
+        }
+        
+        match(TipoToken.PUNTO_Y_COMA);
+        
+        return new NodoReturn(valor);
     }
 
     // <SentenciaScanf> ::= "scanf" "(" <Cadena> "," "&" <Identificador> ")" ";"

@@ -38,9 +38,13 @@ public class CLexer {
                     String lexema = matcher.group();
                     
                     // Validar límite de palabra para palabras reservadas (evita que 'intVariable' sea detectado como 'int')
-                    if ((tipo == TipoToken.INT || tipo == TipoToken.IF || tipo == TipoToken.ELSE) && 
+                    if ((tipo == TipoToken.INT || tipo == TipoToken.IF || tipo == TipoToken.ELSE || 
+                         tipo == TipoToken.WHILE || tipo == TipoToken.FOR || tipo == TipoToken.MAIN || 
+                         tipo == TipoToken.RETURN || tipo == TipoToken.SCANF) && 
+                        (posicion + lexema.length() < entrada.length()) && // Asegurar que no nos salgamos del string
                         Character.isLetterOrDigit(entrada.charAt(posicion + lexema.length()))) {
-                        continue; // No es la palabra reservada sola, es parte de un identificador
+                        
+                        continue; // No es la palabra reservada aislada, es parte de un identificador. Pasamos al siguiente TipoToken.
                     }
 
                     tokens.add(new Token(tipo, lexema));

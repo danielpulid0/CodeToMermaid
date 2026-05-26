@@ -7,6 +7,7 @@ public enum TipoToken {
     WHILE("while"),
     FOR("for"),
     SCANF("scanf"),
+    RETURN("return"),
     
     // Símbolos y operadores 
     IGUAL_IGUAL("=="),
