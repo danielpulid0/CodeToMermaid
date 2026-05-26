@@ -1,3 +1,4 @@
+@Deprecated
 public class PruebaTablaSimbolos {
     public static void main(String[] args) {
         // 1. Armamos el AST "a mano" simulando lo que haría el Parser
