@@ -10,17 +10,18 @@ public class CParser {
     }
 
     // Método principal que inicia el análisis
-    public NodoBloque analizar() throws Exception {
+    public NodoPrograma analizar() throws Exception {
         return Programa();
     }
 
     // <Programa> ::= "int" "main" "(" ")" <Bloque>
-    private NodoBloque Programa() throws Exception {
+    private NodoPrograma Programa() throws Exception {
         match(TipoToken.INT);
         match(TipoToken.MAIN);
         match(TipoToken.PARENTESIS_IZQ);
         match(TipoToken.PARENTESIS_DER);
-        return Bloque(); // Retorna el bloque principal del main
+        NodoBloque bloqueMain = Bloque();
+        return new NodoPrograma(bloqueMain); // Envolvemos el main
     }
 
     // <Bloque> ::= "{" { <Instruccion> } "}"
@@ -52,9 +53,29 @@ public class CParser {
             return SentenciaWhile();
         } else if (currentToken(TipoToken.FOR)) { 
             return SentenciaFor();
+        }else if (currentToken(TipoToken.SCANF)) {
+            return SentenciaScanf();
         }else {
             throw new Exception("Error Sintáctico: Instrucción no reconocida en '" + tokens.get(indiceToken).getNombre() + "'");
         }
+    }
+
+    // <SentenciaScanf> ::= "scanf" "(" <Cadena> "," "&" <Identificador> ")" ";"
+    private NodoLectura SentenciaScanf() throws Exception {
+        match(TipoToken.SCANF);
+        match(TipoToken.PARENTESIS_IZQ);
+        
+        match(TipoToken.CADENA); 
+        match(TipoToken.COMA);
+        match(TipoToken.AMPERSAND);
+        
+        String nombreVariable = tokens.get(indiceToken).getNombre();
+        match(TipoToken.IDENTIFICADOR);
+        
+        match(TipoToken.PARENTESIS_DER);
+        match(TipoToken.PUNTO_Y_COMA);
+        
+        return new NodoLectura(nombreVariable);
     }
 
     // <SentenciaFor> ::= "for" "(" <AsignacionSencilla> ";" <Condicion> ";" <ActualizacionSencilla> ")" <Bloque>

@@ -6,12 +6,14 @@ public enum TipoToken {
     MAIN("main"),
     WHILE("while"),
     FOR("for"),
+    SCANF("scanf"),
     
-    // Símbolos y operadores (Ojo: IGUAL_IGUAL debe ir antes que IGUAL)
+    // Símbolos y operadores 
     IGUAL_IGUAL("=="),
     IGUAL("="), 
     MAYOR_QUE(">"), 
     MENOR_QUE("<"), 
+    AMPERSAND("&"),
 
     // Operadores aritméticos
     SUMA("\\+"),             // Escapado para Regex
@@ -30,6 +32,7 @@ public enum TipoToken {
     // Valores y variables
     NUMERO("\\d+"),
     IDENTIFICADOR("[a-zA-Z_][a-zA-Z0-9_]*"), 
+    CADENA("\"[^\"]*\""),    
     
     EOF(""); // Fin de archivo
 
