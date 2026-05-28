@@ -18,16 +18,16 @@ public class PruebaLexer {
 				}
 				""";
 
-        try {
-            CLexer lexer = new CLexer(codigoC);
-            List<Token> tokens = lexer.analizar();
-            
-            System.out.println("--- TOKENS RECONOCIDOS ---");
-            for (Token t : tokens) {
-                System.out.println(t.getTipo() + " -> " + t.getNombre());
-            }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
+		try {
+			CLexer lexer = new CLexer(codigoC);
+			List<Token> tokens = lexer.analizar();
+
+			System.out.println("--- TOKENS RECONOCIDOS ---");
+			for (Token t : tokens) {
+				System.out.println(t.getTipo() + " -> " + t.getNombre());
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
 }
