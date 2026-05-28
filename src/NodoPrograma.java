@@ -55,7 +55,7 @@ public class NodoPrograma extends NodoTablaSimbolo {
 
 		String[] idsBloque = bloquePrincipal.generarMermaid(contexto);
 
-		String idFin = "nodo" + contexto.incContador();
+		String idFin = "nodoFinGlobal";
 		contexto.codigo.append(idFin).append("([Fin])\n");
 
 		if (idsBloque != null) {

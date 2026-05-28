@@ -7,9 +7,15 @@ public enum TipoToken {
 	ELSE("else"),
 	MAIN("main"),
 	WHILE("while"),
+	DO("do"),
 	FOR("for"),
 	SCANF("scanf"),
 	RETURN("return"),
+	SWITCH("switch"),
+	CASE("case"),
+	DEFAULT("default"),
+	BREAK("break"),
+	EXIT("exit"),
 
 	// Símbolos y operadores
 	IGUAL_IGUAL("=="),
@@ -18,6 +24,7 @@ public enum TipoToken {
 	MAYOR_QUE(">"),
 	MENOR_QUE("<"),
 	AMPERSAND("&"),
+	OR("\\|\\|"),
 
 	// Operadores aritméticos
 	SUMA("\\+"),             // Escapado para Regex
@@ -27,11 +34,15 @@ public enum TipoToken {
 
 	// Delimitadores
 	PUNTO_Y_COMA(";"),
+	DOS_PUNTOS(":"),
 	COMA(","),
 	PARENTESIS_IZQ("\\("),
 	PARENTESIS_DER("\\)"),
 	LLAVE_IZQ("\\{"),
 	LLAVE_DER("\\}"),
+	CORCHETE_IZQ("\\["),
+	CORCHETE_DER("\\]"),
+	INTERROGACION("\\?"),
 
 	PREPROCESSOR("#[^\n]*"),	// captura toda la linea #include <...>
 	VOID("void"),

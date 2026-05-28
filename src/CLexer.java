@@ -41,7 +41,8 @@ public class CLexer {
 					if ((tipo == TipoToken.INT || tipo == TipoToken.FLOAT || tipo == TipoToken.DOUBLE || tipo == TipoToken.IF || tipo == TipoToken.VOID ||
 							tipo == TipoToken.PRINTF || tipo == TipoToken.ELSE ||
 							tipo == TipoToken.WHILE || tipo == TipoToken.FOR || tipo == TipoToken.MAIN ||
-							tipo == TipoToken.RETURN || tipo == TipoToken.SCANF) &&
+							tipo == TipoToken.RETURN || tipo == TipoToken.SCANF || tipo == TipoToken.SWITCH ||
+							tipo == TipoToken.CASE || tipo == TipoToken.DEFAULT || tipo == TipoToken.BREAK || tipo == TipoToken.DO || tipo == TipoToken.EXIT) &&
 							(posicion + lexema.length() < entrada.length()) && // Asegurar que no nos salgamos del string
 							Character.isLetterOrDigit(entrada.charAt(posicion + lexema.length()))) {
 
