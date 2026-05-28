@@ -1,6 +1,8 @@
 public enum TipoToken {
 	// Palabras reservadas
 	INT("int"),
+	FLOAT("float"),
+	DOUBLE("double"),
 	IF("if"),
 	ELSE("else"),
 	MAIN("main"),
@@ -11,6 +13,7 @@ public enum TipoToken {
 
 	// Símbolos y operadores
 	IGUAL_IGUAL("=="),
+	DIFERENTE("!="),
 	IGUAL("="),
 	MAYOR_QUE(">"),
 	MENOR_QUE("<"),
@@ -30,8 +33,13 @@ public enum TipoToken {
 	LLAVE_IZQ("\\{"),
 	LLAVE_DER("\\}"),
 
+	PREPROCESSOR("#[^\n]*"),	// captura toda la linea #include <...>
+	VOID("void"),
+	PRINTF("printf"),
+	LLAMADA_FUNC("[a-zA-Z_][a-zA-Z0-9_]*(?=\\s*\\()"), // lookahead al paréntesis
+
 	// Valores y variables
-	NUMERO("\\d+"),
+	NUMERO("\\d+(\\.\\d+)?"),
 	IDENTIFICADOR("[a-zA-Z_][a-zA-Z0-9_]*"),
 	CADENA("\"[^\"]*\""),
 

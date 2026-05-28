@@ -33,6 +33,14 @@ public class TraductorPrincipal {
 			System.out.println(contexto.codigo.toString());
 			abrirEnNavegador(contexto.codigo.toString());
 
+			// Solo emitir sequenceDiagram si hay funciones definidas con llamadas
+			if (!ast.getFunciones().isEmpty() && ast.tieneLlamadasAFunciones()) {
+				ContextoMermaidSequence ctxSeq = new ContextoMermaidSequence();
+				ast.generarSequenceDiagram(ctxSeq);
+				System.out.println("--- SEQUENCE DIAGRAM ---");
+				System.out.println(ctxSeq.codigo.toString());
+			}
+
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}

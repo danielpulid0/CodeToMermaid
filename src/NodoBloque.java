@@ -9,6 +9,10 @@ public class NodoBloque extends NodoTablaSimbolo
 		instrucciones.add(instruccion);
 	}
 
+	public List<NodoTablaSimbolo> getInstrucciones() {
+		return instrucciones;
+	}
+
 	@Override
 	public String[] generarMermaid(ContextoMermaid contexto)
 	{
