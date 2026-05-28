@@ -194,6 +194,7 @@ nodo13["return 0"]
 nodo14([Fin])
 nodo0 --> nodo1
 nodo13 --> nodo14
+end
 ```
 
 ### 2. Diagrama de Secuencia generado (`sequenceDiagram`)
