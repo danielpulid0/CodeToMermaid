@@ -163,87 +163,37 @@ float division(float a, float b)
 
 ```mermaid
 graph TD
-nodo0["void saludo();"]
-nodo1["int suma(int a , int b);"]
-nodo2["float division(float a , float b);"]
-nodo3([Inicio])
-    nodo4["int x"]
-nodo5[/"Leer x"/]
+nodo0([Inicio])
+    nodo1["int x"]
+nodo2[/"Leer x"/]
+    nodo1 --> nodo2
+    nodo3["x = x + 1"]
+    nodo2 --> nodo3
+nodo4{"x < 5"}
+nodo5(( ))
     nodo6["x = x + 1"]
-nodo7{"x < 5"}
-nodo8(( ))
-    nodo9["x = x + 1"]
-nodo7 -- Sí --> nodo9
-nodo9 --> nodo7
-nodo7 -- No --> nodo8
-    nodo10["int i"]
-nodo11["i = 0"]
-nodo12{"i < 10"}
-nodo13["i++"]
-nodo14(( ))
-nodo11 --> nodo12
-    nodo15["x = i"]
-nodo12 -- Sí --> nodo15
-nodo15 --> nodo13
-nodo13 --> nodo12
-nodo12 -- No --> nodo14
-    nodo16[["saludo()"]]
-    nodo17["int a = 5"]
-    nodo18["int b = 10"]
-    nodo19[["int resultadoSuma = suma(a , b)"]]
-    nodo20[["printf(#quot;\n La suma de %d y %d es: %d#quot; , a , b , resultadoSuma)"]]
-    nodo21[["float resultadoDivision = division(a , b)"]]
-    nodo22[["printf(#quot;\n La division de %f y %f es: %f#quot; , a , b , resultadoDivision)"]]
-nodo23["return 0"]
-nodoFinGlobal([Fin])
-nodo3 --> nodo4
-    nodo4 --> nodo5
-    nodo5 --> nodo6
-    nodo6 --> nodo7
-    nodo8 --> nodo10
-    nodo10 --> nodo11
-    nodo14 --> nodo16
-    nodo16 --> nodo17
-    nodo17 --> nodo18
-    nodo18 --> nodo19
-    nodo19 --> nodo20
-    nodo20 --> nodo21
-    nodo21 --> nodo22
-    nodo22 --> nodo23
-nodo23 --> nodoFinGlobal
-
-subgraph saludo["void saludo()"]
-nodo24([Entrada])
-    nodo26[["printf(#quot;\n SALUDO!#quot;)"]]
-nodo25([Salida])
-nodo24 --> nodo26
-nodo26 --> nodo25
-end
-
-subgraph suma["int suma(int a , int b)"]
-nodo27([Entrada])
-nodo29["return a + b"]
-nodo28([Salida])
-nodo27 --> nodo29
-nodo29 --> nodo28
-end
-
-subgraph division["float division(float a , float b)"]
-nodo30([Entrada])
-    nodo32{"b != 0"}
-nodo33["return a / b"]
-    nodo32 -- Sí --> nodo33
-    nodo34[["printf(#quot;\n Error: Division por cero no permitida.#quot;)"]]
-nodo35["return 0"]
-    nodo34 --> nodo35
-    nodo32 -- No --> nodo34
-    nodo36(( ))
-    nodo33 --> nodo36
-    nodo35 --> nodo36
-nodo31([Salida])
-nodo30 --> nodo32
-nodo36 --> nodo31
-end
+nodo4 -- Sí --> nodo6
+nodo6 --> nodo4
+nodo4 -- No --> nodo5
+    nodo3 --> nodo4
+    nodo7["int i"]
+    nodo5 --> nodo7
+nodo8["i = 0"]
+nodo9{"i < 10"}
+nodo10["i++"]
+nodo11(( ))
+nodo8 --> nodo9
+    nodo12["x = i"]
+nodo9 -- Sí --> nodo12
+nodo12 --> nodo10
+nodo10 --> nodo9
+nodo9 -- No --> nodo11
+    nodo7 --> nodo8
+nodo13["return 0"]
+    nodo11 --> nodo13
+nodo14([Fin])
+nodo0 --> nodo1
+nodo13 --> nodo14
 ```
 
 ### 2. Diagrama de Secuencia generado (`sequenceDiagram`)
