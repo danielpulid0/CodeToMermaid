@@ -9,6 +9,9 @@ import java.util.Base64;
 public class TraductorPrincipal {
 	public static void main(String[] args) {
 		String archivoCodigo = "codigo.c";
+		if (args.length > 0)
+			archivoCodigo = args[0];
+
 		String entrada = leerArchivo(archivoCodigo);
 
 		if (entrada.isEmpty()) {

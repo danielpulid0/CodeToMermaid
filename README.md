@@ -92,7 +92,10 @@ java -cp bin TraductorPrincipal
 ```
 
 > [!NOTE]
-> Por defecto, la clase principal [TraductorPrincipal.java](src/TraductorPrincipal.java) leerá el archivo de entrada [codigo.c](codigo.c) ubicado en la raíz del proyecto. Puedes cambiar el archivo a procesar modificando la variable `archivoCodigo` en la línea 11 de [TraductorPrincipal.java](src/TraductorPrincipal.java).
+> Por defecto, la clase principal [TraductorPrincipal.java](src/TraductorPrincipal.java) leerá el archivo de entrada [codigo.c](codigo.c) ubicado en la raíz del proyecto. También se puede pasar una ruta personalizada como argumento, ejemplo:
+> ```bash
+> java -cp bin TraductorPrincipal codigo2.c
+> ```
 
 ---
 
